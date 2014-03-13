@@ -7,7 +7,7 @@ class Table:
     columns={}
     pKey=None
     
-    def _init_(self, tableName,columns=None,pKey=None):
+    def __init__(self, tableName,columns=None,pKey=None):
         self.tableName=tableName
         self.pKey=pKey
         self.columns=columns
@@ -24,14 +24,14 @@ class Table:
         return self.tableName
         
     def getColumnNames(self):
-        return [x for x in columns.keys()]
+        return [x for x in self.columns.keys()]
         
     
 class DBSchema:
     'The inmemory index that stores a db schema'    
     tables=[]
     
-    def _init_(self, tables):
+    def __init__(self, tables=None):
         self.tables=tables
         pass
         
@@ -45,27 +45,31 @@ class DBSchema:
         pass
         
     def addTable(self,table):
-        tables.append(table)
+	if self.tables==None:
+		self.tables=[]
+        self.tables.append(table)
         pass
         
     def getTableNames(self):
         
-        return [x.getTableName() for x in tables]
+        return [x.getTableName() for x in self.tables]
         pass
     
     
 
 tbs=m.getTableDef()
+
 mySchema=DBSchema()
 
 
-for (key,value) in tbs:
+for key in tbs:
     'value is a list of dictionaries. Each element is of he format (key,value)=(columnname,datatype)'
-    tbl=Table(key,value)
-    mySchema.addT
+    tbl=Table(key,tbs[key])
+    print(tbl.getColumnNames())
+    mySchema.addTable(tbl)
     
 
-print tbs
+print(mySchema.getTableNames())
 
 
     

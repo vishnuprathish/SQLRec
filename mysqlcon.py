@@ -30,4 +30,4 @@ def getTableDef():
     return allTables
 
 
-print(str(getTableDef()))
+#print(str(getTableDef()))
