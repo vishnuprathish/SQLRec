@@ -1,9 +1,13 @@
+import mysqlcon as m
+
+
+
 class Table:
     'well, a table. '
     columns={}
     pKey=None
     
-    def _init_(self, tableName,pKey=None,columns=None):
+    def _init_(self, tableName,columns=None,pKey=None):
         self.tableName=tableName
         self.pKey=pKey
         self.columns=columns
@@ -25,7 +29,7 @@ class Table:
     
 class DBSchema:
     'The inmemory index that stores a db schema'    
-    list tables
+    tables=[]
     
     def _init_(self, tables):
         self.tables=tables
@@ -40,12 +44,28 @@ class DBSchema:
         return self.tables
         pass
         
+    def addTable(self,table):
+        tables.append(table)
+        pass
+        
     def getTableNames(self):
         
         return [x.getTableName() for x in tables]
         pass
     
     
+
+tbs=m.getTableDef()
+mySchema=DBSchema()
+
+
+for (key,value) in tbs:
+    'value is a list of dictionaries. Each element is of he format (key,value)=(columnname,datatype)'
+    tbl=Table(key,value)
+    mySchema.addT
     
+
+print tbs
+
 
     
