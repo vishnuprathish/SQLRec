@@ -90,11 +90,11 @@ mySchema=DBSchema()
 for key in tbs:
     'value is a list of dictionaries. Each element is of he format (key,value)=(columnname,datatype)'
     tbl=Table(key,tbs[key])
-    print(tbl.getColumnNames())
+    #print(tbl.getColumnNames())
     mySchema.addTable(tbl)
     
 
-print(mySchema.getTableNames())
+#print(mySchema.getTableNames())
 
 
     
