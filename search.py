@@ -14,6 +14,12 @@ if (x.getvalue('term'))[0:6] == "select":
 	for column in possibleColumns:
 		keywords.append('select '+column)
 
+if ((x.getvalue('term'))[0:6] == "select" and (x.getvalue('term'))[-1:] == ","):
+	temp = (((x.getvalue('term')).split(' '))[1])[:-1]
+	possibleColumns = databaseSchema.getColumnsOfTables((databaseSchema.getTablesWithColumn(temp)))
+	for column in possibleColumns:
+		for i in column:
+			keywords.append(x.getvalue('term')+i)
 def populateList(keyWord):
     	completeList[keyWord] = {"id":keyWord,"label":keyWord,"value":keyWord}
 for keyword in keywords:

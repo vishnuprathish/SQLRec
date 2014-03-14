@@ -79,7 +79,26 @@ class DBSchema:
                 convCol.append(thing)             
         return convCol
     
+    def getTablesWithColumn(self,columnName):
 
+	allCol = []
+	tablesWithColumnName = []
+
+	for x in self.tables:
+	    #allCol=allCol+x.getColumnNames()
+	    for y in x.getColumnNames():
+		if y == columnName:
+		   tablesWithColumnName.append(x)
+	return tablesWithColumnName
+
+    def getColumnsOfTables(self,tablesWithSpecificColumnName):
+	
+    	col = []
+	for x in tablesWithSpecificColumnName:
+	    col.append(x.getColumnNames())
+	return col
+	
+       
 tbs=m.getTableDef()
 mySchema=DBSchema()
 
