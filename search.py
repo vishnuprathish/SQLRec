@@ -1,8 +1,22 @@
 #!/Users/vishnu/anaconda/bin/python
 print 
 import cgi
+import json
 x=cgi.FieldStorage()
-#print(x.getvalue('term'))
+global completeList
 
-print """[{"id":"Upupa epops","label":"Eurasian Hoopoe","value":"Eurasian Hoopoe"},{"id":"Jynx torquilla","label":"Eurasian Wryneck","value":"Eurasian Wryneck"},{"id":"Ficedula hypoleuca","label":"Eurasian Pied Flycatcher","value":"Eurasian Pied Flycatcher"},{"id":"Sitta europaea","label":"Eurasian Nuthatch","value":"Eurasian Nuthatch"},{"id":"Falco subbuteo","label":"Eurasian Hobby","value":"Eurasian Hobby"},{"id":"Pica pica","label":"Eurasian Magpie","value":"Eurasian Magpie"},{"id":"Garrulus glandarius","label":"Eurasian Jay","value":"Eurasian Jay"},{"id":"Pyrrhula pyrrhula","label":"Eurasian Bullfinch","value":"Eurasian Bullfinch"},{"id":"Scolopax rusticola","label":"Eurasian Woodcock","value":"Eurasian Woodcock"},{"id":"Fulica atra","label":"Eurasian Coot","value":"Eurasian Coot"},{"id":"Numenius phaeopus","label":"Eurasian Whimbrel","value":"Eurasian Whimbrel"},{"id":"Passer montanus","label":"Eurasian Tree Sparrow","value":"Eurasian Tree Sparrow"}]
-"""
+keywords=['select','update','delete','insert into','from']
+
+completeList = {}
+def populateList(keyWord):
+    completeList[keyWord] = {"id":keyWord,"label":keyWord,"value":keyWord}
+for keyword in keywords:
+    populateList(keyword)
+
+listWithContextTerm = []
+partialLength = len(x.getvalue('term'))
+for item in completeList:
+	if item[0:partialLength] == x.getvalue('term'):
+		listWithContextTerm.append(completeList[item])
+print json.dumps(listWithContextTerm)
+
