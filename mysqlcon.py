@@ -40,4 +40,4 @@ def getTableDef():
 
 
 #getTableDef()
-print(str(getTableDef()))
+#print(str(getTableDef()))
