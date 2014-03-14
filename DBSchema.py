@@ -54,6 +54,31 @@ class DBSchema:
         
         return [x.getTableName() for x in self.tables]
         pass
+        
+    def getAllColumns(self):
+        
+        allCol = []
+        
+        for x in self.tables:
+            allCol=allCol+x.getColumnNames()
+            
+        
+        return allCol
+    
+    def getGlobalColRec(self,partialText):
+        
+        allCol = []
+        
+        convCol=[]
+        
+        for x in self.tables:
+            allCol=allCol+x.getColumnNames()
+            
+        for thing in allCol:
+            plen=len(partialText)
+            if(partialText==thing[0:plen]):
+                convCol.append(thing)             
+        return convCol
     
     
 
