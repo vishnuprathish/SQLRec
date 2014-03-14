@@ -1,7 +1,5 @@
 import mysqlcon as m
 
-
-
 class Table:
     'well, a table. '
     columns={}
@@ -15,6 +13,10 @@ class Table:
     
     def setPkey(self,pKey):
         self.pKey=pKey
+        pass
+    
+    def getPkey(self):
+        return self.pKey
         pass
         
     def setColumns(self,columns):
@@ -60,15 +62,12 @@ class DBSchema:
         allCol = []
         
         for x in self.tables:
-            allCol=allCol+x.getColumnNames()
-            
-        
+            allCol=allCol+x.getColumnNames()  
         return allCol
     
     def getGlobalColRec(self,partialText):
         
-        allCol = []
-        
+        allCol = []       
         convCol=[]
         
         for x in self.tables:
@@ -80,21 +79,20 @@ class DBSchema:
                 convCol.append(thing)             
         return convCol
     
-    
 
 tbs=m.getTableDef()
-
 mySchema=DBSchema()
 
-
 for key in tbs:
-    'value is a list of dictionaries. Each element is of he format (key,value)=(columnname,datatype)'
-    tbl=Table(key,tbs[key])
-    print(tbl.getColumnNames())
+    'value is a list of dictionaries. Each element is of the format (key,value)=(columnname,datatype)'
+    pkey=tbs[key]["magicNum999"]
+    del tbs[key]["magicNum999"]
+    tbl=Table(key,tbs[key],pkey)
     mySchema.addTable(tbl)
     
 
-print(mySchema.getTableNames())
+#for x in mySchema.getTables():
+    #print(x.getPkey())
 
 
     
