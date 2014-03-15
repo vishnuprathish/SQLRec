@@ -88,6 +88,8 @@ class DBSchema:
     def recPredicate(self,tables,partialText):   
         result=[]
         resultUnsorted=[]
+        EquiCol={}
+        NotEquiCol={}
         
 	    #plen=len(partialText)
     	dict1 = {}
@@ -96,7 +98,7 @@ class DBSchema:
         table2=tables[1]
         
         i=0
-	j=0
+        j=0
         
         for t1Col in table1.getColumns():
             for t2Col in table2.getColumns():
@@ -111,8 +113,7 @@ class DBSchema:
                     
                     for key in NotEquiCol:   #Concatenate Equicol and NonEquiCol to form the final cartesion product
                         EquiCol[j+key]=NotEquiCol[key]
-                        
-                    
+        #print EquiCol
                 
     	'''for x in tables:
     	    for y in x.getColumnNames():
@@ -120,11 +121,13 @@ class DBSchema:
                     dict1[y].append(x.getTableName())
                 else:
                     dict1[y]=list(x.getTableName())'''
-                
+        #print EquiCol        
         for key in EquiCol:
                 resultUnsorted.append(table1.getTableName()+"."+EquiCol[key][0]+"="+table2.getTableName()+"."+EquiCol[key][1])
                 
-        result=partialMatch(result,partialText)
+        #print resultUnsorted
+                
+        result=partialMatch(resultUnsorted,partialText)
             
     	return result
     
@@ -188,5 +191,4 @@ for key in tbs:
 #for x in mySchema.getTables():
     #print(x.getPkey())
 
-
-    
+#print mySchema.recPredicate([mySchema.getTables()[0],mySchema.getTables()[1]],"e")
