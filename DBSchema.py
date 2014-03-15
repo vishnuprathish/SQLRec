@@ -98,6 +98,18 @@ class DBSchema:
 	    col.append(x.getColumnNames())
 	return col
 	
+    def getTablesWithColumns(self,columnsInQuery):
+	
+	dict = {}
+	listOfTables = []
+	for y in columnsInQuery:
+	    for x in self.tables:
+		for z in x.getColumnNames():
+		    if y == z:
+		       listOfTables.append(x)
+	    dict[y] = listOfTables
+	    listOfTables = []
+	return dict
        
 tbs=m.getTableDef()
 mySchema=DBSchema()

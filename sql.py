@@ -37,8 +37,8 @@ print """
 <body>
  
 <div class="ui-widget">
-  <label for="birds">Birds: </label>
-  <input id="birds">
+  <label for="birds">Enter SQL query: </label>
+  <input size=150 id="birds">
 </div>
  
 <div class="ui-widget" style="margin-top:2em; font-family:Arial">
