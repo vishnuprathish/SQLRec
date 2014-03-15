@@ -62,6 +62,14 @@ class DBSchema:
         self.tables.append(table)
         pass
         
+    def getTableOf(self,tableNames):
+	listOfTables = []
+        for x in self.tables:
+	    for tableName in tableNames:
+	        if tableName == x.getTableName():
+		   listOfTables.append(x)
+	return listOfTables 
+
     def getTableNames(self):
         
         return [x.getTableName() for x in self.tables]
@@ -79,13 +87,14 @@ class DBSchema:
         result=[]
         resultUnsorted=[]
         
-	    plen=len(partialText)
+	    #plen=len(partialText)
     	dict1 = {}
         
         table1=tables[0]   #join for two tables only
         table2=tables[1]
         
-        i=0,j=0
+        i=0
+	j=0
         
         for t1Col in table1.getColumns():
             for t2Col in table2.getColumns():

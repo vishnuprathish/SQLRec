@@ -6,7 +6,6 @@ from DBSchema import mySchema as databaseSchema
 x=cgi.FieldStorage()
 global completeList
 completeList = {}
-
 keywords=['select','update','delete','insert into','from']
 
 if (x.getvalue('term'))[0:6] == "select" and len(x.getvalue('term'))>6:
@@ -66,6 +65,17 @@ if len(partsOfQuery) == 4:
 					if (i != table.getTableName()):
                                			keywords.append(context[0:len(context)-((context[::-1]).index(','))]+table.getTableName())
 
+if len(partsOfQuery) == 5 and partsOfQuery[4] != "where" and context[-1:] != "," and context[-2:-1] != ",":
+	keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+partsOfQuery[3]+' '+"where")
+
+if len(partsOfQuery) == 6:
+	partialText = partsOfQuery[5]
+	tablesList = (partsOfQuery[3]).split(",")
+	print partialText
+	print tablesList
+	print databaseSchema.getTableOf(tablesList)
+	print databaseSchema.recPredicate(databaseSchema.getTableOf(tablesList),partialText)
+	keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+partsOfQuery[3]+' '+partsOfQuery[4]+' '+databaseSchema.recPredicate(databaseSchema.getTableOf(tablesList),partialText))
 
 def populateList(keyWord):
     	completeList[keyWord] = {"id":keyWord,"label":keyWord,"value":keyWord}
