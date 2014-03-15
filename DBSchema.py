@@ -5,7 +5,7 @@ def partialMatch(plist,ptext):
     if ptext==None:
         return plist
     for element in plist:
-        if element.find(ptext)>0:
+        if element.find(ptext)!=-1:
             result.append(element)
     return result
 
@@ -191,4 +191,4 @@ for key in tbs:
 #for x in mySchema.getTables():
     #print(x.getPkey())
 
-#print mySchema.recPredicate([mySchema.getTables()[0],mySchema.getTables()[1]],"e")
+#print mySchema.recPredicate([mySchema.getTables()[0],mySchema.getTables()[1]],"s")

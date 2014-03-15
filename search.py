@@ -71,11 +71,8 @@ if len(partsOfQuery) == 5 and partsOfQuery[4] != "where" and context[-1:] != ","
 if len(partsOfQuery) == 6:
 	partialText = partsOfQuery[5]
 	tablesList = (partsOfQuery[3]).split(",")
-	print partialText
-	print tablesList
-	print databaseSchema.getTableOf(tablesList)
-	print databaseSchema.recPredicate(databaseSchema.getTableOf(tablesList),partialText)
-	keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+partsOfQuery[3]+' '+partsOfQuery[4]+' '+databaseSchema.recPredicate(databaseSchema.getTableOf(tablesList),partialText))
+	for entry in databaseSchema.recPredicate(databaseSchema.getTableOf(tablesList),partialText):
+		keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+partsOfQuery[3]+' '+partsOfQuery[4]+' '+entry)
 
 def populateList(keyWord):
     	completeList[keyWord] = {"id":keyWord,"label":keyWord,"value":keyWord}
@@ -86,6 +83,7 @@ for keyword in keywords:
 listWithContextTerm = []
 partialLength = len(x.getvalue('term'))
 for item in completeList:
+	#print item[0:partialLength] + 'hehehehhe' + x.getvalue('term')
 	if item[0:partialLength] == x.getvalue('term'):
 		listWithContextTerm.append(completeList[item])
 print json.dumps(listWithContextTerm)
