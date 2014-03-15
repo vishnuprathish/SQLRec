@@ -111,8 +111,10 @@ class DBSchema:
                         i+=1
                     
                     
-                    for key in NotEquiCol:   #Concatenate Equicol and NonEquiCol to form the final cartesion product
-                        EquiCol[j+key]=NotEquiCol[key]
+                    #for key in enumerate(i):   #Concatenate Equicol and NonEquiCol to form the final cartesion product
+                    #    EquiCol[j+key]=NotEquiCol[key]
+                    
+                    cartProd=dict(EquiCol.items()+NotEquiCol.items())
         #print EquiCol
                 
     	'''for x in tables:
@@ -122,8 +124,8 @@ class DBSchema:
                 else:
                     dict1[y]=list(x.getTableName())'''
         #print EquiCol        
-        for key in EquiCol:
-                resultUnsorted.append(table1.getTableName()+"."+EquiCol[key][0]+"="+table2.getTableName()+"."+EquiCol[key][1])
+        for key in cartProd:
+                resultUnsorted.append(table1.getTableName()+"."+cartProd[key][0]+"="+table2.getTableName()+"."+cartProd[key][1])
                 
         #print resultUnsorted
                 
