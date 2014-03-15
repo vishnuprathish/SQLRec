@@ -2,6 +2,8 @@ import mysqlcon as m
 
 def partialMatch(plist,ptext):
     result=[]
+    if ptext==None:
+        return plist
     for element in plist:
         if element.find(ptext)>0:
             result.append(element)
