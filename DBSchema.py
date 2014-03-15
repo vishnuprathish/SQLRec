@@ -110,12 +110,13 @@ class DBSchema:
                         NotEquiCol[i]=(t1Col,t2Col)
                         i+=1
                     
-                    
-                    #for key in enumerate(i):   #Concatenate Equicol and NonEquiCol to form the final cartesion product
-                    #    EquiCol[j+key]=NotEquiCol[key]
-                    
-                    cartProd=dict(EquiCol.items()+NotEquiCol.items())
         #print EquiCol
+        for key in range(i):   #Concatenate Equicol and NonEquiCol to form the final cartesion produc 
+            EquiCol[j+key]=NotEquiCol[key]
+            
+        cartProd=EquiCol
+        #cartProd=dict(EquiCol.items()+NotEquiCol.items())
+        #print cartProd
                 
     	'''for x in tables:
     	    for y in x.getColumnNames():
@@ -193,4 +194,4 @@ for key in tbs:
 #for x in mySchema.getTables():
     #print(x.getPkey())
 
-#print mySchema.recPredicate([mySchema.getTables()[0],mySchema.getTables()[1]],"s")
+#print mySchema.recPredicate([mySchema.getTables()[0],mySchema.getTables()[1]],"c")

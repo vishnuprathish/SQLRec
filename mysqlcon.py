@@ -22,7 +22,7 @@ def getTableDef():
     for x in tables:
         cur.execute("DESCRIBE " + x )
         for row in cur:
-            val[row[0]]=row[1]
+            val[row[0]]=str(row[1])
         allTables[x]=val
         val=dict()
         
