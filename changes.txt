@@ -1,3 +1,7 @@
 a method getcolumnnames(string partial_text)
 
+
+The JOIN predicate is a special type of comparison predicate. The rules for a comparison predicate apply here.
+Each expression (expression) specified in the JOIN predicate must contain a column specification. The column specification of the first expression and the column specification of the second expression must be specified in such a way that both column specifications refer to different table names or reference names. The value of the first expression and the value of the second expression must be comparable.
+Only those rows from the table specified in the JOIN predicate are transferred to the result table for which a row is found in the other table specified in the JOIN predicate in accordance with the comparison (specified by the comparison operator comp_op).
  

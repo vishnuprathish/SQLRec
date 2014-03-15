@@ -1,5 +1,12 @@
 import mysqlcon as m
 
+def partialMatch(plist,ptext):
+    result=[]
+    for element in plist:
+        if element.find(ptext)>0:
+            result.append(element)
+    return result
+
 class Table:
     'well, a table. '
     columns={}
@@ -24,6 +31,9 @@ class Table:
         
     def getTableName(self):
         return self.tableName
+        
+    def getColumns(self):
+        return self.columns
         
     def getColumnNames(self):
         return [x for x in self.columns.keys()]
@@ -64,6 +74,48 @@ class DBSchema:
         for x in self.tables:
             allCol=allCol+x.getColumnNames()  
         return allCol
+    
+    def recPredicate(self,tables,partialText):   
+        result=[]
+        resultUnsorted=[]
+        
+	    plen=len(partialText)
+    	dict1 = {}
+        
+        table1=tables[0]   #join for two tables only
+        table2=tables[1]
+        
+        i=0,j=0
+        
+        for t1Col in table1.getColumns():
+            for t2Col in table2.getColumns():
+                if table1.getColumns()[t1Col]==table2.getColumns()[t2Col]:   #Form the Cartesion Product with same datatypes
+                    if t2Col==t1Col:     #Rank the equal ones higher
+                        EquiCol[j]=(t1Col,t2Col)
+                        j+=1
+                    else:
+                        NotEquiCol[i]=(t1Col,t2Col)
+                        i+=1
+                    
+                    
+                    for key in NotEquiCol:   #Concatenate Equicol and NonEquiCol to form the final cartesion product
+                        EquiCol[j+key]=NotEquiCol[key]
+                        
+                    
+                
+    	'''for x in tables:
+    	    for y in x.getColumnNames():
+                if(dict1.get(y) is not None):
+                    dict1[y].append(x.getTableName())
+                else:
+                    dict1[y]=list(x.getTableName())'''
+                
+        for key in EquiCol:
+                resultUnsorted.append(table1.getTableName()+"."+EquiCol[key][0]+"="+table2.getTableName()+"."+EquiCol[key][1])
+                
+        result=partialMatch(result,partialText)
+            
+    	return result
     
     def getGlobalColRec(self,partialText):
         
