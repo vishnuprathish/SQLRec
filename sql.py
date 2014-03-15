@@ -14,6 +14,7 @@ print """
   .ui-autocomplete-loading {
     background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
   }
+  .ui-autocomplete{max-height: 250px; overflow-y: scroll; overflow-x: hidden;}
   </style>
   <script>
   $(function() {
