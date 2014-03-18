@@ -138,6 +138,8 @@ class DBSchema:
         #print resultUnsorted
                 
         result=partialMatch(resultUnsorted,partialText)
+        
+        del result[9]
                  
     	return result
     
