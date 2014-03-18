@@ -88,6 +88,7 @@ class DBSchema:
     def recPredicate(self,tables,partialText):   
         result=[]
         resultUnsorted=[]
+        temRes=[]
         EquiCol={}
         NotEquiCol={}
         
@@ -126,12 +127,18 @@ class DBSchema:
                     dict1[y]=list(x.getTableName())'''
         #print EquiCol        
         for key in cartProd:
-                resultUnsorted.append(table1.getTableName()+"."+cartProd[key][0]+"="+table2.getTableName()+"."+cartProd[key][1])
+                if ((cartProd[key][0].find(cartProd[key][1]) != -1) or (cartProd[key][1].find(cartProd[key][0] != -1))):
+                    tempRes.append(table1.getTableName()+"."+cartProd[key][0]+"="+table2.getTableName()+"."+cartProd[key][1])
+                else:
+                    resultUnsorted.append(table1.getTableName()+"."+cartProd[key][0]+"="+table2.getTableName()+"."+cartProd[key][1])
+                    
+                    
+        resultUnsorted=tempRes+resultUnsorted;
                 
         #print resultUnsorted
                 
         result=partialMatch(resultUnsorted,partialText)
-            
+                 
     	return result
     
     def getGlobalColRec(self,partialText):
