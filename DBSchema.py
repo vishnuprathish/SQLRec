@@ -167,7 +167,7 @@ class DBSchema:
 	    for y in x.getColumnNames():
 		if y == columnName:
 		   tablesWithColumnName.append(x)
-	return tablesWithColumnName
+	return list(set(tablesWithColumnName))
 
     def getColumnsOfTables(self,tablesWithSpecificColumnName):
 	
