@@ -112,7 +112,7 @@ SQL is a universal language used by software engineers on a regular basis. Datab
 
 Structured query models like XQuery, and the wider known SQL are the current existing means provided by database systems to allow users to express complex query semantics. Though powerful, these query models are in essence difficult for users to adopt because they require users to fully understand the structure of the database (i.e., schema) and to express queries in terms of that particular structure. Most often, a developer due to inexperience, unfamiliarity with the database schema or mere lack of attention to computational complexity of the query, fails to use the optimal query. Recommendation engines for a SQL query have the potential to ease a programmer's life by providing him with possible suggestions and optimizations. Providing informed autosuggestions while writing the query can therefore ease a programmer's life.  We use an informed approach towards this end by using the information in hand like database schema, sample of data from the tables, already written partial query structure and semantic information on the schema. These information can be effectively used to give auto suggestions to the user who is writing the query. 
 
-We present a simple recommender which makes the process of query writing easier.  Illustrating with an example, consider the following query and associated recommendations:
+We present a simple recommender which makes the process of query writing easier.  The example illustrated suggests the possible reccomendations in a SQL SELECT query. 
 
 \lstset{language=SQL,breaklines=true}
 \begin{lstlisting}[float=*]
@@ -123,7 +123,7 @@ INNER JOIN Customers --(suggest possible tables on which inner join could be don
 ON Orders.CustomerID=Customers.CustomerID --(suggest possible join predicate based on tables and column names); 
 \end{lstlisting}
 
-In this paper we discuss some observations which have helped us rank the suggestions, the implementation of the tool, and the tool`s evaluation using the standard Northwind database. We present a schema-aware recommendation system for SQL queries with a simple instant-response user interface. To evaluate the tool, we retrace the steps of some common queries used on Northwind database and evaluate the usefulness of the query recommendations given by the system.  
+In the rest of this paper, we discuss some observations which have helped us rank the suggestions, the implementation of the tool, and the tool`s evaluation using the standard Northwind database. We present a schema-aware recommendation system for SQL queries with a simple instant-response user interface. To evaluate the tool, we retrace the steps of some common queries used on Northwind database and evaluate the usefulness of the query recommendations given by the system.  
 
 \section{Brief Survey}
 We picked famous Northwind database schema and a couple of other database schemas and sample set of most frequently used queries on them, to arrive to the following inferences : 
@@ -252,6 +252,9 @@ Arnab Nandi et al. [2], discuss the issues of database schema and data complexit
 
 Many systems designed for databases mine old query logs. They focus on search logs of keywords[7, 8, 9], for tasks varying from predicting the next user action to designing a search taxonomy. Some others mine SQL query logs [10], to order the result tuples of a query. 
 
+\subsection{Comparison to existing systems}
+Our approach is different from all the previous approaches in a couple of ways. In terms of data source, we use the existing SQL database itself as the source of data while most other systems use already existing query logs. This method makes it more practical to attach to a IDE like eclipse and a real programming environment where historical data may not be available. Secondly, none of the existing systems is able to reccomend the entire join predicate in an effective manner.  Choosing the best Join predicate form the key aspect in terms of attaining an optimal query runtime and choosing a good query plan. Even in the simplest case, it makes the query writters life easier by narrowing down the probable join predicate options for him. 
+
 \section{Future Works}
 \begin{itemize}
 \item Semantic analysis \\
@@ -264,7 +267,7 @@ As of now this is simply implemented as a Javascript interface over a python 2.7
 The system now supports MySql which was used for test purposes. But the design is in such a way that it can easily be extended to support other databases with a few lines of code. 
 
 \item Exploring the use case of SQL grammar\\
-SQL grammar [insert reference here ] provides comprehensive information on the possible ways in which a SQL query can be constructed. This can be leveraged to provide recommendations on Keywords if not on attributes.  But more work is necessary to find how grammar can be incorporated into this. 
+SQL grammar provides comprehensive information on the possible ways in which a SQL query can be constructed. This can be leveraged to provide recommendations on Keywords if not on attributes.  But more work is necessary to find how grammar can be incorporated into this. 
 
 \item Nested joins, GROUP BY and HAVING clause\\
 Support for Nested Joins, GROUP BY and HAVING clauses need further work in determinig how the generated reccomendation list can be ranked in an intutive manner. We are planning to include this in the next version. 
@@ -272,7 +275,7 @@ Support for Nested Joins, GROUP BY and HAVING clauses need further work in deter
 \end{itemize}
 
 \section{Conclusion}
-Enter text
+In this paper, we presented a reccommendation system for SQL ... blah bah. 
 
 \section{References}
 [1] H. V. Jagadish, A. Chapman, A. Elkiss, M. Jayapandian, Y. Li, A. Nandi, and C. Yu. Making database systems usable. In Proc. SIGMOD, 2007.\newline
