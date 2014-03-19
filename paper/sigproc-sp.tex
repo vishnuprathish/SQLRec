@@ -27,7 +27,7 @@
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{acm_proc_article-sp}
-
+\usepackage{listings} 
 \begin{document}
 
 \title{Schema-Aware Recommendation Engine for SQL Queries}
@@ -97,392 +97,156 @@ Pragnya Addala\\
 
 \maketitle
 \begin{abstract}
-This paper provides a sample of a \LaTeX\ document which conforms to
-the formatting guidelines for ACM SIG Proceedings.
-It complements the document \textit{Author's Guide to Preparing
-ACM SIG Proceedings Using \LaTeX$2_\epsilon$\ and Bib\TeX}. This
-source file has been written with the intention of being
-compiled under \LaTeX$2_\epsilon$\ and BibTeX.
+In this paper, we present a recommendation engine for SQL query language that can be used in the everyday life of a SQL query writer. We use a schema aware approach unlike our predecessors who use user history from query logs.  The key features of our recommendation engine are auto improvisation of attribute recommendations as the user types query and join predicate recommendation using statistical inference. We use a ranking system with weightages for various parameters at different contexts to recommend keywords, table names, column names and boolean conditions.
 
-The developers have tried to include every imaginable sort
-of ``bells and whistles", such as a subtitle, footnotes on
-title, subtitle and authors, as well as in the text, and
-every optional component (e.g. Acknowledgments, Additional
-Authors, Appendices), not to mention examples of
-equations, theorems, tables and figures.
-
-To make best use of this sample document, run it through \LaTeX\
-and BibTeX, and compare this source code with the printed
-output produced by the dvi file.
+We evaluate the system using query logs on northwind database and has shown that we are able to recommend useful features N\% of times.
 \end{abstract}
 
-% A category with the (minimum) three required fields
-\category{H.4}{Information Systems Applications}{Miscellaneous}
-%A category including the fourth, optional field follows...
-\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+\terms{Recommendation}
 
-\terms{Theory}
-
-\keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
+\keywords{SQL, Recommendation System, autosuggestion, join predicate} % NOT required for Proceedings
 
 \section{Introduction}
 SQL is a universal language used by software engineers on a regular basis. Databases schemas are often designed by experts who are aware of the system and programmers often end up not having much familiarity with the schema. A software engineer who writes queries in a development environment based on this schema he will have to go back and forth to see the schema information to write effective queries. Doing this on a large scale system can be a tedious process. To explain this problem, we take the example of a user searching for the patient record of Englishman ``William Scott" in an hospital database. Schema complexity poses as the first challenge. Most hospitals have records of their patients in varied schema, typical to each department. Second, the user may not be fully aware of the exact values of the selection predicates, and may give only a misspelled or partial attribute value (in this case, the user knows him as ``Will"). Third, we would like the user to issue queries that are meaningful in terms of result size. A query listing all the patients in the hospital would not be helpful to the user, and in some cases could also be computationally expensive for the system. Lastly, we do not expect the user to be proficient in SQL to access the database. 
 
-Structured query models like XQuery, and the wider known SQL are the current existing means provided by database systems to allow users to express complex query semantics. Though powerful, these query models are in essence diﬃcult for users to adopt because they require users to fully understand the structure of the database (i.e., schema) and to express queries in terms of that particular structure. Most often, a developer due to inexperience, unfamiliarity with the database schema or mere lack of attention to computational complexity of the query, fails to use the optimal query. Recommendation engines for a SQL query have the potential to ease a programmer's life by providing him with possible suggestions and optimizations. Providing informed autosuggestions while writing the query can therefore ease a programmer's life.  We use an informed approach towards this end by using the information in hand like database schema, sample of data from the tables, already written partial query structure and semantic information on the schema. These information can be effectively used to give auto suggestions to the user who is writing the query. 
+Structured query models like XQuery, and the wider known SQL are the current existing means provided by database systems to allow users to express complex query semantics. Though powerful, these query models are in essence difficult for users to adopt because they require users to fully understand the structure of the database (i.e., schema) and to express queries in terms of that particular structure. Most often, a developer due to inexperience, unfamiliarity with the database schema or mere lack of attention to computational complexity of the query, fails to use the optimal query. Recommendation engines for a SQL query have the potential to ease a programmer's life by providing him with possible suggestions and optimizations. Providing informed autosuggestions while writing the query can therefore ease a programmer's life.  We use an informed approach towards this end by using the information in hand like database schema, sample of data from the tables, already written partial query structure and semantic information on the schema. These information can be effectively used to give auto suggestions to the user who is writing the query. 
 
 We present a simple recommender which makes the process of query writing easier.  Illustrating with an example, consider the following query and associated recommendations:
-SELECT (suggest possible clauses to start the query)
-Orders.OrderID, Customers.CustomerName,   Orders.OrderDate ( No recommendations or as-you-type suggestions; incase of multiple column names, give preference to column within the same table) 
-FROM Orders (autofill table name based on suffix of SELECT Statement; incase of multiple table names, give preference to tables containing all the columns within itself over tables with join possibilities) 
-INNER JOIN Customers (suggest possible tables on which inner join could be done based on the data from Orders table) 
-ON Orders.CustomerID=Customers.CustomerID (suggest possible join predicate based on tables and column names); 
+
+\lstset{language=SQL,breaklines=true}
+\begin{lstlisting}[float=*]
+SELECT --(suggest possible clauses to start the query)
+Orders.OrderID, Customers.CustomerName --( No recommendations or as-you-type suggestions; incase of multiple column names, give preference to column within the same table) 
+FROM Orders --(autofill table name based on suffix of select statement; incase of multiple table names, give preference to tables containing all the columns within itself over tables with join possibilities) 
+INNER JOIN Customers --(suggest possible tables on which inner join could be done based on the data from Orders table) 
+ON Orders.CustomerID=Customers.CustomerID --(suggest possible join predicate based on tables and column names); 
+\end{lstlisting}
 
 In this paper we discuss some observations which have helped us rank the suggestions, the implementation of the tool, and the tool`s evaluation using the standard Northwind database. We present a schema-aware recommendation system for SQL queries with a simple instant-response user interface. To evaluate the tool, we retrace the steps of some common queries used on Northwind database and evaluate the usefulness of the query recommendations given by the system.  
 
-\section{Implementation}
-Typically, the body of a paper is organized
-into a hierarchical structure, with numbered or unnumbered
-headings for sections, subsections, sub-subsections, and even
-smaller sections.  The command \texttt{{\char'134}section} that
-precedes this paragraph is part of such a
-hierarchy.\footnote{This is the second footnote.  It
-starts a series of three footnotes that add nothing
-informational, but just give an idea of how footnotes work
-and look. It is a wordy one, just so you see
-how a longish one plays out.} \LaTeX\ handles the numbering
-and placement of these headings for you, when you use
-the appropriate heading commands around the titles
-of the headings.  If you want a sub-subsection or
-smaller part to be unnumbered in your output, simply append an
-asterisk to the command name.  Examples of both
-numbered and unnumbered headings will appear throughout the
-balance of this sample document.
+\section{Brief Survey}
+We picked famous Northwind database schema and a couple of other database schemas and sample set of most frequently used queries on them, to arrive to the following inferences : 
 
-Because the entire article is contained in
-the \textbf{document} environment, you can indicate the
-start of a new paragraph with a blank line in your
-input file; that is why this sentence forms a separate paragraph.
+1) In almost 90\% of ``join'' cases, column names are the same
+\\2) In nearly 9\% of ``join'' cases, when column names are not same, column1 is a substring of column2 or vice versa.
+\\3) In almost 99\% of ``join'' cases, datatypes of the matching column names are same with same length if VARCHAR is used. 
+
+\section{Implementation}
+.
 
 \subsection{Global Index Data Structure}
-The implementation is irrespective of the type of database used underneath. A global index structure is populated which contains the schema information from database when a connect statement is detected. This is simply an object with sufficient methods and attributes to represent a schema and recommend on them. An overloaded ‘populate’ method is written for each of the supported types of databases(currently only Mysql is supported) to populate this index. Hence adding support for new databases becomes relatively straightforward. 
+The implementation is irrespective of the type of database used underneath. A global index structure is populated which contains the schema information from database when a connect statement is detected. This is simply an object with sufficient methods and attributes to represent a schema and recommend on them. An overloaded `populate' method is written for each of the supported types of databases(currently only Mysql is supported) to populate this index. Hence adding support for new databases becomes relatively straightforward. 
 The schema information essentially contains the table names, column names and datatype and key information for each of the tables. Apart from these a fraction of data is also collected from these 
 Each database has its own way of extracting schema through the populate method. But the index structure just contains the information that is common to all relational databases in the market. Hence it simply becomes a matter of a few lines of code into the well defined interface of DBindex populate method to extend the feature to any databases.  
 
-\subsection{Math Equations}
-You may want to display math equations in three distinct styles:
-inline, numbered or non-numbered display.  Each of
-the three are discussed in the next sections.
+\subsection{Optimized Autosuggestions}
+Most SQL editors of today provide user with simple suggestions but no ranking mechanism is involved. Our idea is to include ranking based on multiple criteria and return a ranked list of possible query snippets. This would help users decide which suggestion would be more relevant to them, besides providing the ease to users who are not fully familiar with the schema of the database that they are working on.
 
-\subsubsection{Inline (In-text) Equations}
-A formula that appears in the running text is called an
-inline or in-text formula.  It is produced by the
-\textbf{math} environment, which can be
-invoked with the usual \texttt{{\char'134}begin. . .{\char'134}end}
-construction or with the short form \texttt{\$. . .\$}. You
-can use any of the symbols and structures,
-from $\alpha$ to $\omega$, available in
-\LaTeX\cite{Lamport:LaTeX}; this section will simply show a
-few examples of in-text equations in context. Notice how
-this equation: \begin{math}\lim_{n\rightarrow \infty}x=0\end{math},
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
+The suggested tool provides the user with the ten most relevant snippets, with an option to scroll down for more suggestions. The tool hugely makes use of the partial query entered and the database schema to predict/suggest rest of the query. Suggestions ranging from simple ones such as ``select'',``insert into'', ``update'', ``delete'' at the beginning of the query to more complex ones such as recommending possible join predicates are included. With ``select'' being the mostly commonly used SQL query it is given higher rank followed by the rest of the clauses. The tool has currently been built with more focus on the select statement as the scope for autosuggestions for this statement alone was huge. In future, we intend to extend the focus onto other SQL statements as well.
 
-\subsubsection{Display Equations}
-A numbered display equation -- one set off by vertical space
-from the text and centered horizontally -- is produced
-by the \textbf{equation} environment. An unnumbered display
-equation is produced by the \textbf{displaymath} environment.
-
-Again, in either environment, you can use any of the symbols
-and structures available in \LaTeX; this section will just
-give a couple of examples of display equations in context.
-First, consider the equation, shown as an inline equation above:
-\begin{equation}\lim_{n\rightarrow \infty}x=0\end{equation}
-Notice how it is formatted somewhat differently in
-the \textbf{displaymath}
-environment.  Now, we'll enter an unnumbered equation:
-\begin{displaymath}\sum_{i=0}^{\infty} x + 1\end{displaymath}
-and follow it with another numbered equation:
-\begin{equation}\sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f\end{equation}
-just to demonstrate \LaTeX's able handling of numbering.
-
-\subsection{Citations}
-Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
-conference
-proceedings \cite{clark:pct} or books \cite{salas:calculus, Lamport:LaTeX} listed
-in the Bibliography section of your
-article will occur throughout the text of your article.
-You should use BibTeX to automatically produce this bibliography;
-you simply need to insert one of several citation commands with
-a key of the item cited in the proper location in
-the \texttt{.tex} file \cite{Lamport:LaTeX}.
-The key is a short reference you invent to uniquely
-identify each work; in this sample document, the key is
-the first author's surname and a
-word from the title.  This identifying key is included
-with each item in the \texttt{.bib} file for your article.
-
-The details of the construction of the \texttt{.bib} file
-are beyond the scope of this sample document, but more
-information can be found in the \textit{Author's Guide},
-and exhaustive details in the \textit{\LaTeX\ User's
-Guide}\cite{Lamport:LaTeX}.
-
-This article shows only the plainest form
-of the citation command, using \texttt{{\char'134}cite}.
-This is what is stipulated in the SIGS style specifications.
-No other citation format is endorsed.
-
-\subsection{Tables}
-Because tables cannot be split across pages, the best
-placement for them is typically the top of the page
-nearest their initial cite.  To
-ensure this proper ``floating'' placement of tables, use the
-environment \textbf{table} to enclose the table's contents and
-the table caption.  The contents of the table itself must go
-in the \textbf{tabular} environment, to
-be aligned properly in rows and columns, with the desired
-horizontal and vertical rules.  Again, detailed instructions
-on \textbf{tabular} material
-is found in the \textit{\LaTeX\ User's Guide}.
-
-Immediately following this sentence is the point at which
-Table 1 is included in the input file; compare the
-placement of the table here with the table in the printed
-dvi output of this document.
-
-\begin{table}
-\centering
-\caption{Frequency of Special Characters}
-\begin{tabular}{|c|c|l|} \hline
-Non-English or Math&Frequency&Comments\\ \hline
-\O & 1 in 1,000& For Swedish names\\ \hline
-$\pi$ & 1 in 5& Common in math\\ \hline
-\$ & 4 in 5 & Used in business\\ \hline
-$\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
-\hline\end{tabular}
-\end{table}
-
-To set a wider table, which takes up the whole width of
-the page's live area, use the environment
-\textbf{table*} to enclose the table's contents and
-the table caption.  As with a single-column table, this wide
-table will ``float" to a location deemed more desirable.
-Immediately following this sentence is the point at which
-Table 2 is included in the input file; again, it is
-instructive to compare the placement of the
-table here with the table in the printed dvi
-output of this document.
-
-
-\begin{table*}
-\centering
-\caption{Some Typical Commands}
-\begin{tabular}{|c|c|l|} \hline
-Command&A Number&Comments\\ \hline
-\texttt{{\char'134}alignauthor} & 100& Author alignment\\ \hline
-\texttt{{\char'134}numberofauthors}& 200& Author enumeration\\ \hline
-\texttt{{\char'134}table}& 300 & For tables\\ \hline
-\texttt{{\char'134}table*}& 400& For wider tables\\ \hline\end{tabular}
-\end{table*}
-% end the environment with {table*}, NOTE not {table}!
-
-\subsection{Figures}
-Like tables, figures cannot be split across pages; the
-best placement for them
-is typically the top or the bottom of the page nearest
-their initial cite.  To ensure this proper ``floating'' placement
-of figures, use the environment
-\textbf{figure} to enclose the figure and its caption.
-
-This sample document contains examples of \textbf{.eps}
-and \textbf{.ps} files to be displayable with \LaTeX.  More
-details on each of these is found in the \textit{Author's Guide}.
-
-\begin{figure}
-\centering
-\epsfig{file=fly.eps}
-\caption{A sample black and white graphic (.eps format).}
-\end{figure}
-
-\begin{figure}
-\centering
-\epsfig{file=fly.eps, height=1in, width=1in}
-\caption{A sample black and white graphic (.eps format)
-that has been resized with the \texttt{epsfig} command.}
-\end{figure}
-
-
-As was the case with tables, you may want a figure
-that spans two columns.  To do this, and still to
-ensure proper ``floating'' placement of tables, use the environment
-\textbf{figure*} to enclose the figure and its caption.
-
-Note that either {\textbf{.ps}} or {\textbf{.eps}} formats are
-used; use
-the \texttt{{\char'134}epsfig} or \texttt{{\char'134}psfig}
-commands as appropriate for the different file types.
-
-\subsection{Theorem-like Constructs}
-Other common constructs that may occur in your article are
-the forms for logical constructs like theorems, axioms,
-corollaries and proofs.  There are
-two forms, one produced by the
-command \texttt{{\char'134}newtheorem} and the
-other by the command \texttt{{\char'134}newdef}; perhaps
-the clearest and easiest way to distinguish them is
-to compare the two in the output of this sample document:
-
-This uses the \textbf{theorem} environment, created by
-the\linebreak\texttt{{\char'134}newtheorem} command:
-\newtheorem{theorem}{Theorem}
-\begin{theorem}
-Let $f$ be continuous on $[a,b]$.  If $G$ is
-an antiderivative for $f$ on $[a,b]$, then
-\begin{displaymath}\int^b_af(t)dt = G(b) - G(a).\end{displaymath}
-\end{theorem}
-
-The other uses the \textbf{definition} environment, created
-by the \texttt{{\char'134}newdef} command:
-\newdef{definition}{Definition}
-\begin{definition}
-If $z$ is irrational, then by $e^z$ we mean the
-unique number which has
-logarithm $z$: \begin{displaymath}{\log e^z = z}\end{displaymath}
-\end{definition}
-
-
-Two lists of constructs that use one of these
-forms is given in the
-\textit{Author's  Guidelines}.
+While typing in the column name in a query, when no partial text is entered, an entire list of column names is returned. First column is suggested depending on the partial text typed it. As seen in Fig. 1, the user's partial entry which in this case is ``P'' is used to suggest all the possible column names.  If the query involves two or more columns, columns within same table are given a static score of 50 and columns in other tables are given a score of 25. Succeeding columns are hence suggested using these scores thereby giving more preferences to columns within the same table over columns from different tables. Every insertion of comma in the query after a column name, brings out the possible ranked list of suggestion for remaining columns.
 
 \begin{figure*}
 \centering
-\epsfig{file=flies.eps}
-\caption{A sample black and white graphic (.eps format)
-that needs to span two columns of text.}
+\includegraphics[width=170mm]{column_names.png}
+\caption{Recommendations for Column Names}
+\label{overflow}
 \end{figure*}
-and don't forget to end the environment with
-{figure*}, not {figure}!
- 
-There is one other similar construct environment, which is
-already set up
-for you; i.e. you must \textit{not} use
-a \texttt{{\char'134}newdef} command to
-create it: the \textbf{proof} environment.  Here
-is a example of its use:
-\begin{proof}
-Suppose on the contrary there exists a real number $L$ such that
-\begin{displaymath}
-\lim_{x\rightarrow\infty} \frac{f(x)}{g(x)} = L.
-\end{displaymath}
-Then
-\begin{displaymath}
-l=\lim_{x\rightarrow c} f(x)
-= \lim_{x\rightarrow c}
-\left[ g{x} \cdot \frac{f(x)}{g(x)} \right ]
-= \lim_{x\rightarrow c} g(x) \cdot \lim_{x\rightarrow c}
-\frac{f(x)}{g(x)} = 0\cdot L = 0,
-\end{displaymath}
-which contradicts our assumption that $l\neq 0$.
-\end{proof}
 
-Complete rules about using these environments and using the
-two different creation commands are in the
-\textit{Author's Guide}; please consult it for more
-detailed instructions.  If you need to use another construct,
-not listed therein, which you want to have the same
-formatting as the Theorem
-or the Definition\cite{salas:calculus} shown above,
-use the \texttt{{\char'134}newtheorem} or the
-\texttt{{\char'134}newdef} command,
-respectively, to create it.
+SQL clauses such as ``from'', ``where'' etc. are suggested basing on the preceding part of the query, more specifically on the immediately preceding phrase.
 
-\subsection*{A {\secit Caveat} for the \TeX\ Expert}
-Because you have just been given permission to
-use the \texttt{{\char'134}newdef} command to create a
-new form, you might think you can
-use \TeX's \texttt{{\char'134}def} to create a
-new command: \textit{Please refrain from doing this!}
-Remember that your \LaTeX\ source code is primarily intended
-to create camera-ready copy, but may be converted
-to other forms -- e.g. HTML. If you inadvertently omit
-some or all of the \texttt{{\char'134}def}s recompilation will
-be, to say the least, problematic.
-
-\section{Conclusions}
-This paragraph will end the body of this sample document.
-Remember that you might still have Acknowledgments or
-Appendices; brief samples of these
-follow.  There is still the Bibliography to deal with; and
-we will make a disclaimer about that here: with the exception
-of the reference to the \LaTeX\ book, the citations in
-this paper are to articles which have nothing to
-do with the present subject and are used as
-examples only.
-%\end{document}  % This is where a 'short' article might terminate
+Table names are determined by the column names used the earlier part of the query. Tables with all used column names within the same table are given a static score of 50 and tables with column names spanned across various tables are given a score of 25. As seen in Fig. 2, ``employees'' is ranked higher in the recommended list because the column names ``FirstName'' and ``Country'' are both present in ``employees'' table. The list is then followed by tables, `customers'' and ``suppliers'', which could be a part of the query incase of JOIN clause (basing on the column names). Like in the case of suggesting column names, usage of comma will bring out ranked suggestions for table names where tables with multiple column names within them are given higher preference over join possibilities.
 
 
-%
-% The following two commands are all you need in the
-% initial runs of your .tex file to
-% produce the bibliography for the citations in your paper.
-\bibliographystyle{abbrv}
-\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
-% You must have a proper ".bib" file
-%  and remember to run:
-% latex bibtex latex latex
-% to resolve all references
-%
-% ACM needs 'a single self-contained file'!
-%
-%APPENDICES are optional
-%\balancecolumns
-\appendix
-%Appendix A
-\section{Headings in Appendices}
-The rules about hierarchical headings discussed above for
-the body of the article are different in the appendices.
-In the \textbf{appendix} environment, the command
-\textbf{section} is used to
-indicate the start of each Appendix, with alphabetic order
-designation (i.e. the first is A, the second B, etc.) and
-a title (if you include one).  So, if you need
-hierarchical structure
-\textit{within} an Appendix, start with \textbf{subsection} as the
-highest level. Here is an outline of the body of this
-document in Appendix-appropriate form:
-\subsection{Introduction}
-\subsection{The Body of the Paper}
-\subsubsection{Type Changes and  Special Characters}
-\subsubsection{Math Equations}
-\paragraph{Inline (In-text) Equations}
-\paragraph{Display Equations}
-\subsubsection{Citations}
-\subsubsection{Tables}
-\subsubsection{Figures}
-\subsubsection{Theorem-like Constructs}
-\subsubsection*{A Caveat for the \TeX\ Expert}
-\subsection{Conclusions}
-\subsection{Acknowledgments}
-\subsection{Additional Authors}
-This section is inserted by \LaTeX; you do not insert it.
-You just add the names and information in the
-\texttt{{\char'134}additionalauthors} command at the start
-of the document.
-\subsection{References}
-Generated by bibtex from your ~.bib file.  Run latex,
-then bibtex, then latex twice (to resolve references)
-to create the ~.bbl file.  Insert that ~.bbl file into
-the .tex source file and comment out
-the command \texttt{{\char'134}thebibliography}.
-% This next section command marks the start of
-% Appendix B, and does not continue the present hierarchy
-\section{More Help for the Hardy}
-The acm\_proc\_article-sp document class file itself is chock-full of succinct
-and helpful comments.  If you consider yourself a moderately
-experienced to expert user of \LaTeX, you may find reading
-it useful but please remember not to change it.
-\balancecolumns
-% That's all folks!
+\begin{figure*}
+\centering
+\includegraphics[width=170mm]{table_names.png}
+\caption{Recommendations for Table Names}
+\label{overflow}
+\end{figure*}
+
+
+
+\subsection{Join Predicate}
+Join predicates form one of the key difficulties for every query writer. The complexity of possible ways in which a user can write join predicate translates to difficulty in creating a search space from which recommendations can be generated. To make the problem tractable, we treat join predicates as a separate entity with the following grammar:
+
+Grammar code here
+
+
+The outer join indicator symbol is no longer recommended to be used and might be removed from future versions. Hence we ignored that operator. For a Join predicate of the form,  \textless expression\textgreater  \textless comp-op\textgreater \textless expression\textgreater, we followed a four step approach on generating recommendations. The data we already have include table names on which Join operation is being performed, and the column names to be used in the projection operator. These tokens are collected from the global parse structure  and passed to recommendation engine which in turn outputs the ranked join predicates. 
+
+\subsubsection{Join Predicate prediction algorithm}
+1) Find the Cartesian Product of columns on given tables with matching data type. This forms the search space from which recommendations are generated. Each recommendation is associated with a RecScore out of 100 which decides the ranking of that particular recommendation. 
+\\ 2) Columns with same column names are added a static score of 50.
+\\ 3) Among the ones with same column name, columns with Primary Key  are added a score of 10.
+\\ 4) Substring match one column name with another. If there is a full match, add 25 to the score. No score for partial matches 
+
+As seen in Fig. 4, columns with same name are listed at the top of the suggestion list of the join predicate, in this case - the top 5 recommendations. It is then followed by columns with substring matching, i.e. the next 2 recommendations. Datatype and character length matches come next on the list, recommendations 8 and 9. All the other possibilities are given lowest preference and can still be viewed by scrolling down the list.
+
+\begin{figure*}
+\centering
+\includegraphics[width=170mm]{join_predicate.png}
+\caption{Join Predicate sample recommendations}
+\label{overflow}
+\end{figure*}
+
+\section{Evaluation}
+We have taken a relatively straightforward approach to evaluate the efficiency of our recommender. Evaluation is done for the fields which on which we are doing the prediction in the following manner. A database of queries on Northwind database was collected from various sources is used as test set. The parser that was written to parse the partly written query was used to construct an evaluator which basically compares between the recommendation suggested by our system and the one that is actually used in the query. 
+
+\begin{figure*}
+\centering
+\includegraphics[width=170mm]{Northwind_schema.png}
+\caption{Schema of NorthWind database}
+\label{overflow}
+\end{figure*}
+
+
+With the features in our current recommendation system 67\% of the queries can be performed. Other queries in the same set require nested joins, having clause etc. which would form a good part of future work. On retracing the do-able queries, in 90\% of the cases the recommendation at the top of the suggestion list matched the desired query. In 10\% of the cases the recommendation at the second or third spot in the suggestion list matched the desired query. Hence, for the given sample set, we achieved 100\% accuracy in predicting the query, given the top 10 suggestions.
+
+\section{Related Work}
+Several tools and systems have been designed to ease the use of databases. Jagadish et al. [1] describe the most common challenges faced in databases today.
+
+QueRIE [4], Javad Akbarnejad et al., was the one of the first frameworks to address the problem of generating SQL query recommendations. The QueRIE recommender system analyzes the query log of a user, searches for other users who have executed queries over similar parts of the database, and recommends new queries accordingly. 
+Nodira Khoussainova et al. [5] present a system, SnipSuggest, to handle autocompletion for SQL queries basing on the context of the query.  It recommends possible additions to various clauses in the SQL query using related snippets collected from a log of past queries. 
+
+Arnab Nandi et al. [2], discuss the issues of database schema and data complexity, result size estimation, and query validity; and provide novel approaches to solving these problems. Koutrika et al.[3] present a graph-based approach to automatically translate SQL into natural language and thereby provide the user with a textual explanation which would be helpful in common scenarios where the user is unaware of the semantic connections within various fields of a database. Extending SQL recommendation systems with such a feature would enrich their usability.
+
+Many systems designed for databases mine old query logs. They focus on search logs of keywords[7, 8, 9], for tasks varying from predicting the next user action to designing a search taxonomy. Some others mine SQL query logs [10], to order the result tuples of a query. 
+
+\section{Future Works}
+1) Semantic analysis \\
+We have noted that the fieldnames that a schema designer uses to when the table is designed mostly falls into some standard names. These include dictionary words which conveys the meaning of the data contained within that attribute or appending suffixes like ``id'' or ``num'' or ``no'' to the attributes. This information has a potential of being used to provide better recommendations since we already have schema information in hand. For example, a semantic analysis of attributes would give information about the meaning of attributes which can be used to combine with already written partial query to provide similar recommendations.  
+
+2) Integrating with IDEs\\
+As of now this is simply implemented as a Javascript interface over a python 2.7 backend. The focus was on to develop the right algorithms for various SQL keywords. But for this to be used in the industry by a real software engineer, this has to be integrated with an IDE like Eclipse and an auto-connection detect feature needs to be implemented which can detect the connection statement and connect to existing databases prior to loading schema. 
+
+3) Support for more databases through a uniform interface \\
+The system now supports MySql which was used for test purposes. But the design is in such a way that it can easily be extended to support other databases with a few lines of code. 
+
+4) Exploring the use case of SQL grammar\\
+SQL grammar [insert reference here ] provides comprehensive information on the possible ways in which a SQL query can be constructed. This can be leveraged to provide recommendations on Keywords if not on attributes.  But more work is necessary to find how grammar can be incorporated into this. 
+
+5) Nested joins\\
+
+6) GROUP BY and HAVING clause\\
+
+
+
+\section{Conclusion}
+Enter text
+
+\section{References}
+[1] H. V. Jagadish, A. Chapman, A. Elkiss, M. Jayapandian, Y. Li, A. Nandi, and C. Yu. Making database systems usable. In Proc. SIGMOD, 2007.\newline
+[2] A. Nandi and H. V. Jagadish. Assisted querying using instant-response interfaces. In Proc. SIGMOD, 2007.\newline
+[3] G. Koutrika, A. Simitsis, and Y. Ioannidis. Explaining structured queries in natural language. In Proc. of the 26th ICDE Conf.\newline
+[4] J. Akbarnejad, G. Chatzopoulou, M. Eirinaki, S. Koshy, S. Mittal, M. Eirinaki, Duc On and N. Polyzotis. SQL QueRIE Recommendations. In Proc. VLDB 2010.\newline
+[5] Nodira Khoussainova , Yongchul Kwon , Magdalena Balazinska , and Dan Suciu. SnipSuggest: Context-Aware Autocompletion for SQL. In Proc. VLDB, 2010.\newline
+[6] Georeference.org, Sample Queries.\newline
+[7] A. Broder. A taxonomy of web search. SIGIR Forum, 2002.\newline
+[8] D. Downey, S. T. Dumais, and E. Horvitz. Models of searching and browsing: Languages, studies, and application. In IJCAI, 2007. \newline
+[9] D. Downey, S. Dumais, D. Liebling, and E. Horvitz. Understanding the relationship between searchers’ queries and information goals. In CIKM, 2008. \newline
+[10] ] S. Chaudhuri, G. Das, V. Hristidis, and G. Weikum. Probabilistic ranking of database query results. In Proc. VLDB, 2004.
+
+
+
 \end{document}

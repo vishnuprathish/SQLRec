@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  18 MAR 2014 20:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  19 MAR 2014 03:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -184,7 +184,45 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
-))) (./sigproc-sp.aux)
+)))
+(/usr/local/texlive/2013/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count109
+\lst@gtempboxa=\box30
+\lst@token=\toks36
+\lst@length=\count110
+\lst@currlwidth=\dimen123
+\lst@column=\count111
+\lst@pos=\count112
+\lst@lostspace=\dimen124
+\lst@width=\dimen125
+\lst@newlines=\count113
+\lst@lineno=\count114
+\abovecaptionskip=\skip44
+\belowcaptionskip=\skip45
+\lst@maxwidth=\dimen126
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count115
+\lst@skipnumbers=\count116
+\lst@framebox=\box31
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+(./sigproc-sp.aux
+
+LaTeX Warning: Label `overflow' multiply defined.
+
+
+LaTeX Warning: Label `overflow' multiply defined.
+
+
+LaTeX Warning: Label `overflow' multiply defined.
+
+)
 \openout1 = `sigproc-sp.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
@@ -199,19 +237,19 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
-(/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count109
-\scratchdimen=\dimen123
-\scratchbox=\box30
-\nofMPsegments=\count110
-\nofMParguments=\count111
-\everyMPshowfont=\toks36
-\MPscratchCnt=\count112
-\MPscratchDim=\dimen124
-\MPnumerator=\count113
-\makeMPintoPDFobject=\count114
-\everyMPtoPDFconversion=\toks37
+\scratchcounter=\count117
+\scratchdimen=\dimen127
+\scratchbox=\box32
+\nofMPsegments=\count118
+\nofMParguments=\count119
+\everyMPshowfont=\toks37
+\MPscratchCnt=\count120
+\MPscratchDim=\dimen128
+\MPnumerator=\count121
+\makeMPintoPDFobject=\count122
+\everyMPtoPDFconversion=\toks38
 ) (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -260,6 +298,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+\c@lstlisting=\count123
 LaTeX Font Info:    Try loading font information for U+msa on input line 98.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -275,190 +314,83 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 98.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Overfull \hbox (1.0793pt too wide) in paragraph at lines 100--106
-\T1/aer/m/it/9 Prepar-ing ACM SIG Pro-ceed-ings Us-ing L[]T[]X$\OT1/cmr/m/n/9 2
-[]$ \T1/aer/m/it/9 and BibT[]X\T1/aer/m/n/9 .
+Overfull \hbox (10.52837pt too wide) in paragraph at lines 102--104
+[]\T1/aer/m/n/9 We eval-u-ate the sys-tem us-ing query logs on north-wind datab
+ase
  []
 
-
-Overfull \hbox (1.26794pt too wide) in paragraph at lines 122--123
-\T1/aer/m/n/9 H.4 [\T1/aer/bx/n/9 Information Sys-tems Ap-pli-ca-tions\T1/aer/m
-/n/9 ]: Mis-cel-la-neous;
- []
-
-
-Overfull \hbox (3.27281pt too wide) in paragraph at lines 133--139
-\T1/aer/m/n/9 ders.OrderID, Cus-tomers.CustomerName, Or-ders.OrderDate
- []
-
-
-Overfull \hbox (125.78857pt too wide) in paragraph at lines 133--139
-\T1/aer/m/n/9 done based on the data from Or-ders ta-ble) ON Or-ders.CustomerID
-=Customers.CustomerID
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+(/usr/local/texlive/2013/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+Underfull \vbox (badness 7012) has occurred while \output is active []
 
  [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 146.
+<column_names.png, id=10, 1109.14375pt x 231.86626pt>
+File: column_names.png Graphic file (type png)
+ <use column_names.png>
+Package pdftex.def Info: column_names.png used on input line 151.
+(pdftex.def)             Requested size: 483.69684pt x 101.11574pt.
 
+<table_names.png, id=12, 1111.15125pt x 138.5175pt>
+File: table_names.png Graphic file (type png)
+ <use table_names.png>
+Package pdftex.def Info: table_names.png used on input line 163.
+(pdftex.def)             Requested size: 483.69684pt x 60.299pt.
 
-(/usr/local/texlive/2013/texmf-dist/tex/latex/ae/t1aett.fd
-File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
+[2] <join_predicate.png, id=19, 1144.275pt x 358.33875pt>
+File: join_predicate.png Graphic file (type png)
 
-LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 184.
+<use join_predicate.png>
+Package pdftex.def Info: join_predicate.png used on input line 188.
+(pdftex.def)             Requested size: 483.69684pt x 151.47452pt.
 
+<Northwind_schema.png, id=20, 1217.54875pt x 750.805pt>
+File: Northwind_schema.png Graphic file (type png)
 
-LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
- line 210.
+<use Northwind_schema.png>
+Package pdftex.def Info: Northwind_schema.png used on input line 198.
+(pdftex.def)             Requested size: 483.69684pt x 298.26599pt.
+ [3 <./column_names.png> <./table_names.png>]
+[4 <./join_predicate.png> <./Northwind_schema.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 229--230
 
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-10.
-
-
-LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
-e 210.
-
-
-LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
-put line 210.
-
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-12.
-
-
-LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 212.
-
-
-LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 212.
-
-
-LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 218.
-
-
-LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 229.
-
-[2]
-Package epstopdf Info: Source file: <fly.eps>
-(epstopdf)                    date: 2014-03-18 18:30:18
-(epstopdf)                    size: 155104 bytes
-(epstopdf)             Output file: <fly-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-03-18 20:21:00
-(epstopdf)                    size: 4243 bytes
-(epstopdf)             Command: <repstopdf --outfile=fly-eps-converted-to.pdf f
-ly.eps>
-(epstopdf)             \includegraphics on input line 304.
-Package epstopdf Info: Output file is already uptodate.
- <fly-eps-converted-to.pdf, id=23, 34.1275pt x 32.12pt>
-File: fly-eps-converted-to.pdf Graphic file (type pdf)
-
-<use fly-eps-converted-to.pdf>
-Package pdftex.def Info: fly-eps-converted-to.pdf used on input line 304.
-(pdftex.def)             Requested size: 34.1274pt x 32.1199pt.
-Package epstopdf Info: Source file: <fly.eps>
-(epstopdf)                    date: 2014-03-18 18:30:18
-(epstopdf)                    size: 155104 bytes
-(epstopdf)             Output file: <fly-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-03-18 20:21:00
-(epstopdf)                    size: 4243 bytes
-(epstopdf)             Command: <repstopdf --outfile=fly-eps-converted-to.pdf f
-ly.eps>
-(epstopdf)             \includegraphics on input line 310.
-Package epstopdf Info: Output file is already uptodate.
-File: fly-eps-converted-to.pdf Graphic file (type pdf)
- <use fly-eps-converted-to.pdf>
-Package pdftex.def Info: fly-eps-converted-to.pdf used on input line 310.
-(pdftex.def)             Requested size: 72.27492pt x 72.27565pt.
-
-
-LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 312.
-
-\c@theorem=\count115
-
-Underfull \hbox (badness 1603) in paragraph at lines 336--340
-[]\T1/aer/m/n/9 This uses the \T1/aer/bx/n/9 the-o-rem \T1/aer/m/n/9 en-vi-ron-
-ment, cre-ated by the
- []
-
-\c@definition=\count116
-Package epstopdf Info: Source file: <flies.eps>
-(epstopdf)                    date: 2014-03-18 18:30:18
-(epstopdf)                    size: 343737 bytes
-(epstopdf)             Output file: <flies-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-03-18 20:32:35
-(epstopdf)                    size: 9687 bytes
-(epstopdf)             Command: <repstopdf --outfile=flies-eps-converted-to.pdf
- flies.eps>
-(epstopdf)             \includegraphics on input line 361.
-Package epstopdf Info: Output file is already uptodate.
-<flies-eps-converted-to.pdf, id=24, 307.1475pt x 114.4275pt>
-File: flies-eps-converted-to.pdf Graphic file (type pdf)
-
-<use flies-eps-converted-to.pdf>
-Package pdftex.def Info: flies-eps-converted-to.pdf used on input line 361.
-(pdftex.def)             Requested size: 307.14674pt x 114.42722pt.
-
-Overfull \hbox (15.60826pt too wide) detected at line 386
-\OML/cmm/m/it/9 l \OT1/cmr/m/n/9 = [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm
-/m/it/9 x\OT1/cmr/m/n/9 ) = [] [] = [] \OML/cmm/m/it/9 g\OT1/cmr/m/n/9 (\OML/cm
-m/m/it/9 x\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^A [] [] \OT1/cmr/m/n/9 = 0 \OMS/cm
-sy/m/n/9 ^^A \OML/cmm/m/it/9 L \OT1/cmr/m/n/9 = 0\OML/cmm/m/it/9 ;
  []
 
 
-LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 396.
+Underfull \hbox (badness 10000) in paragraph at lines 231--232
 
-[3 <./fly-eps-converted-to.pdf>]
-No file sigproc-sp.bbl.
-[4 <./flies-eps-converted-to.pdf>] (./sigproc-sp.aux)
+ []
 
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+[5] (./sigproc-sp.aux)
+
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2843 strings out of 493315
- 36245 string characters out of 6137904
- 101909 words of memory out of 5000000
- 6208 multiletter control sequences out of 15000+600000
- 58586 words of font info for 82 fonts, out of 8000000 for 9000
+ 4247 strings out of 493315
+ 56485 string characters out of 6137904
+ 196488 words of memory out of 5000000
+ 7615 multiletter control sequences out of 15000+600000
+ 48451 words of font info for 65 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,10n,28p,1293b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,10n,40p,1293b,1249s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
-live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/tex
-live/2013/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/
-texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/te
-xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texl
-ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive
-/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/20
-13/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2013
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2013/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2013/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013/texmf
--dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2013/texmf-d
-ist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2013/texmf-dist/fon
-ts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type
-1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/time
-s/utmbi8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a
-.pfb>
-Output written on sigproc-sp.pdf (4 pages, 212687 bytes).
+live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/
+2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/20
+13/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013
+/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2013/texmf-
+dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/texmf-dist/fo
+nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
+urw/times/utmri8a.pfb>
+Output written on sigproc-sp.pdf (5 pages, 299841 bytes).
 PDF statistics:
- 93 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+ 65 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
