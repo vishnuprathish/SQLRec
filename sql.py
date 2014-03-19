@@ -14,7 +14,7 @@ print """
   .ui-autocomplete-loading {
     background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
   }
-  .ui-autocomplete{max-height: 250px; overflow-y: scroll; overflow-x: hidden;}
+  .ui-autocomplete{max-height: 310px; overflow-y: scroll; overflow-x: hidden;}
   </style>
   <script>
   $(function() {
@@ -39,14 +39,11 @@ print """
  
 <div class="ui-widget">
   <label for="birds">Enter SQL query: </label>
-  <input size=150 id="birds">
+  <input size=100 id="birds">
 </div>
- 
 <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-  Result:
-  <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+  <div id="log" style="height: 0px; width: 0px; overflow: auto;" class="ui-widget-content"></div>
 </div>
- 
  
 </body>
 </html>

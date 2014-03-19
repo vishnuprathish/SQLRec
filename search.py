@@ -11,7 +11,8 @@ keywords=['select','update','delete','insert into','from']
 if (x.getvalue('term'))[0:6] == "select" and len(x.getvalue('term'))>6:
 	possibleColumns = databaseSchema.getGlobalColRec((x.getvalue('term'))[7:len(x.getvalue('term'))])
 	for column in possibleColumns:
-		keywords.append('select '+column)
+		if 'select '+column not in keywords:
+			keywords.append('select '+column)
 
 context = x.getvalue('term')
 partsOfQuery = context.split(" ")
@@ -25,13 +26,15 @@ if len(partsOfQuery) == 2:
 			for column in possibleColumns:
 				for i in columnNames:
 					if i != column:
-						keywords.append(context[0:len(context)-((context[::-1]).index(','))]+column)
+						if context[0:len(context)-((context[::-1]).index(','))]+column not in keywords:
+							keywords.append(context[0:len(context)-((context[::-1]).index(','))]+column)
 		else:
                         possibleColumns = databaseSchema.getGlobalColRec('')
                         for column in possibleColumns:
                                 for i in columnNames:
 					if i != column:
-						keywords.append(context[0:len(context)-((context[::-1]).index(','))]+column)
+						if context[0:len(context)-((context[::-1]).index(','))]+column not in keywords:
+							keywords.append(context[0:len(context)-((context[::-1]).index(','))]+column)
 		
 if (partsOfQuery[0] == "select" and len(partsOfQuery) == 3 and context[-1:] != "," and context[-2:-1] != ","):
 	keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+"from")
@@ -51,7 +54,8 @@ if len(partsOfQuery) == 4:
                         keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+result)
 		for key in possibleTables:
                        for table in possibleTables[key]:
-                               keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+table.getTableName())
+				if (partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+table.getTableName()) not in keywords:
+                               		keywords.append(partsOfQuery[0]+' '+partsOfQuery[1]+' '+partsOfQuery[2]+' '+table.getTableName())
 
 if len(partsOfQuery) == 4:
 	tableNames = partsOfQuery[3].split(",")
