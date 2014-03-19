@@ -139,7 +139,7 @@ class DBSchema:
                 
         result=partialMatch(resultUnsorted,partialText)
         
-        del result[9]
+        #del result[9]
                  
     	return result
     

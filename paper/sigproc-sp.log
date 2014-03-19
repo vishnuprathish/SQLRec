@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  19 MAR 2014 03:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  19 MAR 2014 04:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -212,7 +212,24 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
-(./sigproc-sp.aux
+(/usr/local/texlive/2013/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count117
+\c@ALG@rem=\count118
+\c@ALG@nested=\count119
+\ALG@tlm=\skip46
+\ALG@thistlm=\skip47
+\c@ALG@Lnr=\count120
+\c@ALG@blocknr=\count121
+\c@ALG@storecount=\count122
+\c@ALG@tmpcounter=\count123
+\ALG@tmplength=\skip48
+) (./sigproc-sp.aux
 
 LaTeX Warning: Label `overflow' multiply defined.
 
@@ -225,30 +242,30 @@ LaTeX Warning: Label `overflow' multiply defined.
 )
 \openout1 = `sigproc-sp.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
  (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count117
+\scratchcounter=\count124
 \scratchdimen=\dimen127
 \scratchbox=\box32
-\nofMPsegments=\count118
-\nofMParguments=\count119
+\nofMPsegments=\count125
+\nofMParguments=\count126
 \everyMPshowfont=\toks37
-\MPscratchCnt=\count120
+\MPscratchCnt=\count127
 \MPscratchDim=\dimen128
-\MPnumerator=\count121
-\makeMPintoPDFobject=\count122
+\MPnumerator=\count128
+\makeMPintoPDFobject=\count129
 \everyMPtoPDFconversion=\toks38
 ) (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -298,23 +315,23 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count123
-LaTeX Font Info:    Try loading font information for U+msa on input line 98.
+\c@lstlisting=\count130
+LaTeX Font Info:    Try loading font information for U+msa on input line 99.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 98.
+LaTeX Font Info:    Try loading font information for U+msb on input line 99.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 98.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 99.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Overfull \hbox (10.52837pt too wide) in paragraph at lines 102--104
+Overfull \hbox (10.52837pt too wide) in paragraph at lines 103--105
 []\T1/aer/m/n/9 We eval-u-ate the sys-tem us-ing query logs on north-wind datab
 ase
  []
@@ -328,53 +345,59 @@ Underfull \vbox (badness 7012) has occurred while \output is active []
 
 
 ]
+Overfull \hbox (3.7786pt too wide) in paragraph at lines 144--145
+[]\T1/aer/m/n/9 Parser sug-gests base key-words us-ing a dic-tio-nary lookup
+ []
+
 <column_names.png, id=10, 1109.14375pt x 231.86626pt>
 File: column_names.png Graphic file (type png)
  <use column_names.png>
-Package pdftex.def Info: column_names.png used on input line 151.
+Package pdftex.def Info: column_names.png used on input line 165.
 (pdftex.def)             Requested size: 483.69684pt x 101.11574pt.
 
-<table_names.png, id=12, 1111.15125pt x 138.5175pt>
+[2] <table_names.png, id=18, 1111.15125pt x 138.5175pt>
 File: table_names.png Graphic file (type png)
  <use table_names.png>
-Package pdftex.def Info: table_names.png used on input line 163.
+Package pdftex.def Info: table_names.png used on input line 177.
 (pdftex.def)             Requested size: 483.69684pt x 60.299pt.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 187.
 
-[2] <join_predicate.png, id=19, 1144.275pt x 358.33875pt>
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+)
+Overfull \hbox (24.09192pt too wide) in paragraph at lines 210--210
+[]          \T1/aett/m/n/9 and might be removed from future versions.  !>[] 
+ []
+
+
+Underfull \vbox (badness 1824) has occurred while \output is active []
+
+
+<join_predicate.png, id=19, 1144.275pt x 358.33875pt>
 File: join_predicate.png Graphic file (type png)
-
-<use join_predicate.png>
-Package pdftex.def Info: join_predicate.png used on input line 188.
+ <use join_predicate.png>
+Package pdftex.def Info: join_predicate.png used on input line 227.
 (pdftex.def)             Requested size: 483.69684pt x 151.47452pt.
 
 <Northwind_schema.png, id=20, 1217.54875pt x 750.805pt>
 File: Northwind_schema.png Graphic file (type png)
 
 <use Northwind_schema.png>
-Package pdftex.def Info: Northwind_schema.png used on input line 198.
+Package pdftex.def Info: Northwind_schema.png used on input line 237.
 (pdftex.def)             Requested size: 483.69684pt x 298.26599pt.
- [3 <./column_names.png> <./table_names.png>]
-[4 <./join_predicate.png> <./Northwind_schema.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 229--230
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 231--232
-
- []
-
-[5] (./sigproc-sp.aux)
+ [3 <./column_names.png>] [4 <./table_names.png> <./join_predicate.png> <./Nort
+hwind_schema.png (PNG copy)>] [5] (./sigproc-sp.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4247 strings out of 493315
- 56485 string characters out of 6137904
- 196488 words of memory out of 5000000
- 7615 multiletter control sequences out of 15000+600000
- 48451 words of font info for 65 fonts, out of 8000000 for 9000
+ 4583 strings out of 493315
+ 60999 string characters out of 6137904
+ 202959 words of memory out of 5000000
+ 7939 multiletter control sequences out of 15000+600000
+ 48939 words of font info for 67 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  41i,10n,40p,1293b,1249s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -383,14 +406,15 @@ live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
 ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/
 2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/20
 13/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013
-/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2013/texmf-
-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/texmf-dist/fo
-nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
-urw/times/utmri8a.pfb>
-Output written on sigproc-sp.pdf (5 pages, 299841 bytes).
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2013/t
+exmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2013/texmf-di
+st/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/texmf-dist/font
+s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/ur
+w/times/utmri8a.pfb>
+Output written on sigproc-sp.pdf (5 pages, 314927 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 69 PDF objects out of 1000 (max. 8388607)
+ 44 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

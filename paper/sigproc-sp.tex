@@ -28,6 +28,7 @@
 
 \documentclass{acm_proc_article-sp}
 \usepackage{listings} 
+\usepackage{algorithmicx}
 \begin{document}
 
 \title{Schema-Aware Recommendation Engine for SQL Queries}
@@ -99,7 +100,7 @@ Pragnya Addala\\
 \begin{abstract}
 In this paper, we present a recommendation engine for SQL query language that can be used in the everyday life of a SQL query writer. We use a schema aware approach unlike our predecessors who use user history from query logs.  The key features of our recommendation engine are auto improvisation of attribute recommendations as the user types query and join predicate recommendation using statistical inference. We use a ranking system with weightages for various parameters at different contexts to recommend keywords, table names, column names and boolean conditions.
 
-We evaluate the system using query logs on northwind database and has shown that we are able to recommend useful features N\% of times.
+We evaluate the system using query logs on northwind database and has shown that we are able to recommend useful features 99\% of times in the top ten results and over 90% of times in the first two results.  
 \end{abstract}
 
 \terms{Recommendation}
@@ -131,24 +132,37 @@ We picked famous Northwind database schema and a couple of other database schema
 \\2) In nearly 9\% of ``join'' cases, when column names are not same, column1 is a substring of column2 or vice versa.
 \\3) In almost 99\% of ``join'' cases, datatypes of the matching column names are same with same length if VARCHAR is used. 
 
+These inferences act as the key motivation for this work. 
+
 \section{Implementation}
-.
+The key Data Strucutre that enables the reccomendations is a Global Index which acts as an in memory representation of schema on which various algorithms are applied to derive the reccomendations. Any relational database can populate this datastructure using a 'populateIndex()' interface exposed as an API.  
+
+The base algorithm that that returns reccomendations is as follows : 
+
+\begin {enumerate}
+\item   User begins typing a partial SQL Query
+\item  Parser suggests base keywords using a dictionary lookup of SQL keywords. A tokenizer converts the keywords into tokens. 
+\item Tokens are serialized and passed into Global Index. 
+\item Global Index , upon reciving the partial query, uses various algorithms to generate a list of reccomendations and join predicates(if necessary) based on the partial query and returns a ranked list of reccomendations. 
+\item As user types in more information, substring matching is performed on this returend list of reccomendations and Step 3 is repeated (if required). 
+\end {enumerate}
+
 
 \subsection{Global Index Data Structure}
-The implementation is irrespective of the type of database used underneath. A global index structure is populated which contains the schema information from database when a connect statement is detected. This is simply an object with sufficient methods and attributes to represent a schema and recommend on them. An overloaded `populate' method is written for each of the supported types of databases(currently only Mysql is supported) to populate this index. Hence adding support for new databases becomes relatively straightforward. 
+ A global index structure is populated which contains the schema information from database when a connect statement is detected. The implementation of this strucutre does not depend on the type of database used underneath. This is simply an object with sufficient methods and attributes to represent a schema and recommend on them. An overloaded `populateIndex()' method is written for each of the supported types of databases(currently only Mysql is supported) to populate this index. Hence adding support for new databases becomes relatively straightforward. 
 The schema information essentially contains the table names, column names and datatype and key information for each of the tables. Apart from these a fraction of data is also collected from these 
-Each database has its own way of extracting schema through the populate method. But the index structure just contains the information that is common to all relational databases in the market. Hence it simply becomes a matter of a few lines of code into the well defined interface of DBindex populate method to extend the feature to any databases.  
+Each database has its own way of extracting schema through the populate method. But the index structure just contains the information that is common to all relational databases in the market. Hence it simply becomes a matter of a few lines of code into the well defined interface of DBindex populateIndex() method to extend the feature to any databases.  
 
 \subsection{Optimized Autosuggestions}
 Most SQL editors of today provide user with simple suggestions but no ranking mechanism is involved. Our idea is to include ranking based on multiple criteria and return a ranked list of possible query snippets. This would help users decide which suggestion would be more relevant to them, besides providing the ease to users who are not fully familiar with the schema of the database that they are working on.
 
-The suggested tool provides the user with the ten most relevant snippets, with an option to scroll down for more suggestions. The tool hugely makes use of the partial query entered and the database schema to predict/suggest rest of the query. Suggestions ranging from simple ones such as ``select'',``insert into'', ``update'', ``delete'' at the beginning of the query to more complex ones such as recommending possible join predicates are included. With ``select'' being the mostly commonly used SQL query it is given higher rank followed by the rest of the clauses. The tool has currently been built with more focus on the select statement as the scope for autosuggestions for this statement alone was huge. In future, we intend to extend the focus onto other SQL statements as well.
+The suggested tool provides the user with the ten most relevant snippets, with an option to scroll down for more suggestions. The tool hugely makes use of the partial query entered and the database schema to predict/suggest rest of the query. This helps in narrowing down the list of reccomendations and improving the accuracy. Suggestions ranging from simple ones such as ``select'',``insert into'', ``update'', ``delete'' at the beginning of the query to more complex ones such as recommending possible join predicates are included. With ``select'' being the mostly commonly used SQL query it is given higher rank followed by the rest of the clauses. The tool has currently been built with more focus on the select statement as the scope for autosuggestions for this statement alone was relatively big. In future, we intend to extend the focus onto other SQL statements as well.
 
 While typing in the column name in a query, when no partial text is entered, an entire list of column names is returned. First column is suggested depending on the partial text typed it. As seen in Fig. 1, the user's partial entry which in this case is ``P'' is used to suggest all the possible column names.  If the query involves two or more columns, columns within same table are given a static score of 50 and columns in other tables are given a score of 25. Succeeding columns are hence suggested using these scores thereby giving more preferences to columns within the same table over columns from different tables. Every insertion of comma in the query after a column name, brings out the possible ranked list of suggestion for remaining columns.
 
 \begin{figure*}
 \centering
-\includegraphics[width=170mm]{column_names.png}
+\includegraphics[width=170mm]{column_names}
 \caption{Recommendations for Column Names}
 \label{overflow}
 \end{figure*}
@@ -170,16 +184,41 @@ Table names are determined by the column names used the earlier part of the quer
 \subsection{Join Predicate}
 Join predicates form one of the key difficulties for every query writer. The complexity of possible ways in which a user can write join predicate translates to difficulty in creating a search space from which recommendations can be generated. To make the problem tractable, we treat join predicates as a separate entity with the following grammar:
 
-Grammar code here
+\begin{verbatim}
+
+<join_predicate> ::=
+  <expression> [<outer_join_indicator>]
+    <comp_op> <expression> [<outer_join_indicator>]
+
+<outer_join_indicator> ::=
+  (+) <!  This SQL clause is
+          no longer recommended to be used
+          and might be removed from future versions.  !>
+
+<comp_op> ::=
+  <
+| >
+| <>
+| !=
+| =
+| <=
+| >=
+| ~= <!  for computers with ASCII code  !>
+| ~< <!  for computers with ASCII code  !>
+| ~> <!  for computers with ASCII code  !>
+
+\end{verbatim}
 
 
 The outer join indicator symbol is no longer recommended to be used and might be removed from future versions. Hence we ignored that operator. For a Join predicate of the form,  \textless expression\textgreater  \textless comp-op\textgreater \textless expression\textgreater, we followed a four step approach on generating recommendations. The data we already have include table names on which Join operation is being performed, and the column names to be used in the projection operator. These tokens are collected from the global parse structure  and passed to recommendation engine which in turn outputs the ranked join predicates. 
 
 \subsubsection{Join Predicate prediction algorithm}
-1) Find the Cartesian Product of columns on given tables with matching data type. This forms the search space from which recommendations are generated. Each recommendation is associated with a RecScore out of 100 which decides the ranking of that particular recommendation. 
-\\ 2) Columns with same column names are added a static score of 50.
-\\ 3) Among the ones with same column name, columns with Primary Key  are added a score of 10.
-\\ 4) Substring match one column name with another. If there is a full match, add 25 to the score. No score for partial matches 
+\begin {enumerate}
+\item Find the Cartesian Product of columns on given tables with matching data type. This forms the search space from which recommendations are generated. Each recommendation is associated with a RecScore which decides the ranking of that particular recommendation. 
+\item Columns with same column names are added a static score of 50.
+\item Among the ones with same column name, columns with Primary Key  are added a score of 10.
+\item Substring match one column name with another. If there is a full match, add 25 to the score. No score for partial matches 
+\end{enumerate}
 
 As seen in Fig. 4, columns with same name are listed at the top of the suggestion list of the join predicate, in this case - the top 5 recommendations. It is then followed by columns with substring matching, i.e. the next 2 recommendations. Datatype and character length matches come next on the list, recommendations 8 and 9. All the other possibilities are given lowest preference and can still be viewed by scrolling down the list.
 
@@ -191,7 +230,7 @@ As seen in Fig. 4, columns with same name are listed at the top of the suggestio
 \end{figure*}
 
 \section{Evaluation}
-We have taken a relatively straightforward approach to evaluate the efficiency of our recommender. Evaluation is done for the fields which on which we are doing the prediction in the following manner. A database of queries on Northwind database was collected from various sources is used as test set. The parser that was written to parse the partly written query was used to construct an evaluator which basically compares between the recommendation suggested by our system and the one that is actually used in the query. 
+We have taken a relatively straightforward approach to evaluate the efficiency of recommender. Evaluation is done for the fields which on which we are doing the prediction in the following manner. A database of queries on Northwind database was collected from various sources is used as test set. The same parser that was written to parse the partly written query for the reccomendation engine was used to construct an evaluator which basically compares between the recommendation suggested by our system and the one that is actually used in the query. 
 
 \begin{figure*}
 \centering
@@ -201,7 +240,7 @@ We have taken a relatively straightforward approach to evaluate the efficiency o
 \end{figure*}
 
 
-With the features in our current recommendation system 67\% of the queries can be performed. Other queries in the same set require nested joins, having clause etc. which would form a good part of future work. On retracing the do-able queries, in 90\% of the cases the recommendation at the top of the suggestion list matched the desired query. In 10\% of the cases the recommendation at the second or third spot in the suggestion list matched the desired query. Hence, for the given sample set, we achieved 100\% accuracy in predicting the query, given the top 10 suggestions.
+There were 62 queries in our evaluation set collected from two different sources. With the features in our current recommendation system 65\% of the SELECT queries could be performed without errors. Other queries in the same set require nested joins, having or group by clauses etc. which would form a good part of future work. On retracing the do-able queries, in 86\% of the cases the recommendation at the top of the suggestion list matched the desired query. In 10\% of the cases the recommendation at the second or third spot in the suggestion list matched the desired query. Remaining 4% of suggestions was there in the top ten list as well. Hence, for the given sample set, we achieved 100\% accuracy in predicting the query, given the top 10 suggestions.
 
 \section{Related Work}
 Several tools and systems have been designed to ease the use of databases. Jagadish et al. [1] describe the most common challenges faced in databases today.
@@ -214,23 +253,23 @@ Arnab Nandi et al. [2], discuss the issues of database schema and data complexit
 Many systems designed for databases mine old query logs. They focus on search logs of keywords[7, 8, 9], for tasks varying from predicting the next user action to designing a search taxonomy. Some others mine SQL query logs [10], to order the result tuples of a query. 
 
 \section{Future Works}
-1) Semantic analysis \\
+\begin{itemize}
+\item Semantic analysis \\
 We have noted that the fieldnames that a schema designer uses to when the table is designed mostly falls into some standard names. These include dictionary words which conveys the meaning of the data contained within that attribute or appending suffixes like ``id'' or ``num'' or ``no'' to the attributes. This information has a potential of being used to provide better recommendations since we already have schema information in hand. For example, a semantic analysis of attributes would give information about the meaning of attributes which can be used to combine with already written partial query to provide similar recommendations.  
 
-2) Integrating with IDEs\\
+\item Integrating with IDEs\\
 As of now this is simply implemented as a Javascript interface over a python 2.7 backend. The focus was on to develop the right algorithms for various SQL keywords. But for this to be used in the industry by a real software engineer, this has to be integrated with an IDE like Eclipse and an auto-connection detect feature needs to be implemented which can detect the connection statement and connect to existing databases prior to loading schema. 
 
-3) Support for more databases through a uniform interface \\
+\item Support for more databases through a uniform interface \\
 The system now supports MySql which was used for test purposes. But the design is in such a way that it can easily be extended to support other databases with a few lines of code. 
 
-4) Exploring the use case of SQL grammar\\
+\item Exploring the use case of SQL grammar\\
 SQL grammar [insert reference here ] provides comprehensive information on the possible ways in which a SQL query can be constructed. This can be leveraged to provide recommendations on Keywords if not on attributes.  But more work is necessary to find how grammar can be incorporated into this. 
 
-5) Nested joins\\
+\item Nested joins, GROUP BY and HAVING clause\\
+Support for Nested Joins, GROUP BY and HAVING clauses need further work in determinig how the generated reccomendation list can be ranked in an intutive manner. We are planning to include this in the next version. 
 
-6) GROUP BY and HAVING clause\\
-
-
+\end{itemize}
 
 \section{Conclusion}
 Enter text
